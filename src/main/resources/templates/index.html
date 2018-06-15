@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="/include/header :: headerfragment">
+<body>
+
+<nav th:include="/include/navigationTop :: navigationTop" class="navbar navbar-light navbar-expand-md"></nav>
+<div th:include="/include/navigationLeft :: navigationLeft" class="wrapper"></div>
+
+<a href="/feeds/sync" class="btn btn-primary">페이스북 동기화 하기</a>
+<a href="/feeds" class="btn btn-success">게시글 확인하기</a>
+
+<div th:include="/include/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+.navbar.navbar-light.navbar-expand-md {
+  background-color:#4267b2;
+}
+
+.navbar-light .navbar-brand {
+  color:#FFFFFF;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
+  color:#FFFFFF;
+}
+
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+  color:#FFFFFF;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color:#FFFFFF;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color:#FFFFFF;
+}

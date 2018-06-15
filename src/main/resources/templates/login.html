@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head th:include="/include/header :: headerfragment">
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>Login</h1>
+        <form action="/signin/facebook" method="POST">
+            <input type="hidden" name="scope" value="public_profile" />
+            <input type="submit" value="Login using Facebook" class="btn btn-primary" />
+        </form>
+    </div>
+</body>
+</html>

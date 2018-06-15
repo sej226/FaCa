@@ -1,0 +1,135 @@
+<div th:fragment="footer">
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    $(document).on('click', '.category-delete', function() {
+      var categoryName = $(this).siblings().data('categoryName');
+
+      $.ajax({
+        url: '/api/category/' + categoryName,
+        method: 'delete',
+        dataType: 'json',
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('token', token);
+        },
+        success: function(response) {
+          alert(response['data']);
+          location.reload();
+        }
+      })
+    });
+
+    $(document).on('click', '.li-category', function() {
+      var categoryName = $(this).data('categoryName');
+
+      $.ajax({
+        url: '/api/feeds/category/' + categoryName,
+        method: 'get',
+        dataType: 'json',
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('token', token);
+        },
+        success: function(response) {
+          viewFeeds(response['data']);
+        }
+      });
+    });
+
+    $('#btn-category-feed-add').click(function() {
+      var feedId = [];
+      var categoryName = prompt('카테고리 입력');
+
+      if (categoryName == '')
+        return;
+
+      $('input[name="categoryChk"]:checked').each(function() {
+        feedId.push($(this).val());
+      });
+
+      if (feedId.length == 0) {
+        alert('게시물을 선택하세요.');
+        return;
+      }
+
+      $.ajax({
+        url: '/api/feeds/category',
+        method: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          "category": {
+            "name": categoryName
+          },
+          "feedId": feedId
+        }),
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('token', token);
+        },
+        success: function(response) {
+          alert('카테고리가 추가되었습니다.');
+        }
+      });
+    });
+
+    $('#li-uncategory').click(function() {
+      $.ajax({
+        url: '/api/feeds/uncategory',
+        method: 'get',
+        dataType: 'json',
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('token', token);
+        },
+        success: function(response) {
+          viewFeeds(response['data']);
+        }
+      })
+    });
+
+    function viewFeeds(feedList) {
+      removeFeedList();
+      for (var i = 0; i < feedList.length; i++) {
+        insertIntoFeedList(feedList[i]);
+      }
+    }
+
+    function removeFeedList() {
+      $('#feed-list').empty();
+    }
+
+    function insertIntoFeedList(feed) {
+      var category = (feed['category'] == undefined) ? '미분류' : feed['category']['name'];
+      var template = '<div class="col-4 py-3 mx-auto col-xl-3 col-lg-4 col-md-4 col-sm-12" style="min-width:300px;min-height:300px;" id="feed-list">\n'
+          + '        <div class="card" style="width:100%;height:100%;"><a href="#"><img class="img-fluid card-img-top" src="' + feed['imageUrl'] + '" style="height:200px;"></a>\n'
+          + '        <div class="card-body">\n'
+          + '        <h5>분류: ' + category + '</h5>\n'
+          + '        <p>' + feed['description'] + '</p>\n'
+          + '        </div>\n'
+          + '        <div class="card-footer text-center"><input type="checkbox" class="form-check category-check" name="categoryChk" value="' + feed['id'] + '"/><small><a href="' + feed['link'] + '"><i class="fa fa-eye pr-1">자세히 보기</i><br></a></small></div>\n'
+          + '    </div>\n'
+          + '    </div>'
+      $('#feed-list').append(template);
+    }
+
+    $('#btn-category-add').click(function() {
+      var categoryName = prompt("추가할 카테고리를 입력하세요");
+
+      $.ajax({
+        url: '/api/category',
+        method: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          "name": categoryName
+        }),
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('token', token);
+        },
+        success: function(response) {
+          alert(response['data']);
+          location.reload();
+        }
+      })
+    });
+
+  </script>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head th:include="/include/header :: headerfragment">
+<body>
+
+<nav th:include="/include/navigationTop :: navigationTop" class="navbar navbar-light navbar-expand-md"></nav>
+<div th:include="/include/navigationLeft :: navigationLeft" class="wrapper"></div>
+
+  <!-- 게시물 표시 시작 -->
+  <div class="row" id="feed-list">
+
+    <div th:each="feed : ${feedList}" class="col-4 py-3 mx-auto col-xl-3 col-lg-4 col-md-4 col-sm-12" style="min-width:300px;min-height:300px;">
+      <div class="card" style="width:100%;height:100%;"><a href="#"><img class="img-fluid card-img-top" th:src="${feed.imageUrl}" style="height:200px;"></a>
+        <div class="card-body">
+          <p th:text="${feed.description}"></p>
+        </div>
+        <div class="card-footer text-center">
+          <input type="checkbox" class="form-check category-check" name="categoryChk" th:value="${feed.id}">
+          <small><a th:href="${feed.link}"><i class="fa fa-eye pr-1"></i>자세히 보기<br></a></small>
+        </div>
+      </div>
+    </div>
+  <!-- 게시물 표시 끝 -->
+
+  <div th:include="/include/footer :: footer"></div>
+</body>
+</html>
